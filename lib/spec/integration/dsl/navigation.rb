@@ -53,6 +53,9 @@ module Spec
               onclick =~ /setAttribute\('value', '(get|put|delete|post)'\)/
               href = anchor["href"]
               method = $1
+            elsif onclick =~ /f.method = '(get|put|delete|post)'/i
+              href = anchor["href"]
+              method = $1.downcase
             else
               violated "There is some funky onclick on that link"
             end

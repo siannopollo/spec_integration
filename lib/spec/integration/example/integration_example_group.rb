@@ -4,7 +4,7 @@ module Spec
     
     module Example
       
-      class IntegrationExample < Spec::Rails::Example::RailsExampleGroup # :nodoc:
+      class IntegrationExample < Spec::Rails::Example::ModelExampleGroup # :nodoc:
         include Spec::Integration::DSL
         include Spec::Integration::Matchers
         include ActionController::RecordIdentifier
@@ -22,8 +22,8 @@ module Spec
         # RSpec be_ and have_ matchers working.
         #
         def method_missing(sym, *args, &block) # :nodoc:
-          return Spec::Matchers::Be.new(sym, *args) if sym.starts_with?("be_")
-          return has(sym, *args) if sym.starts_with?("have_")
+          return Spec::Matchers::Be.new(sym, *args) if sym.to_s.starts_with?("be_")
+          return has(sym, *args) if sym.to_s.starts_with?("have_")
           super
         end
         

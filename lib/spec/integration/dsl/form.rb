@@ -42,7 +42,7 @@ module Spec
             violated "Form '#{selector}' has a file field named '#{name}', but the enctype is not multipart/form-data"
           end
           if matching_field.name == "select"
-            response.should have_tag(matching_field, "option[value=#{value}]")
+            should have_tag(matching_field, "option[value=#{value}]")
           end
         end
         form
@@ -121,7 +121,7 @@ module Spec
         
         form = sees_form(selector, values, options)
         violated "Form '#{selector}' is missing an 'action' attribute" if form["action"].blank?
-        submit_to form["action"], load_hidden_fields(values, form, options[:include_hidden]), form["method"], options
+        submit_to form["action"], load_hidden_fields(values, form, options[:include_hidden]), form["method"], options#.inject({}) {|m,(k,v)| m[k] = v.to_s; m}
       end
       
       private
